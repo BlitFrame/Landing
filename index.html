@@ -6,18 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
         content="Velocity - Mass Video Generation. The rendering engine for personalized video at scale.">
-    <meta name="theme-color" content="#f97316">
+    <meta name="theme-color" content="#26c6a0">
     <title>Velocity | Private Beta</title>
+    <!-- Theme (load early to prevent flash) -->
+    <script src="theme.js"></script>
     <!-- Styles -->
-    <link rel="stylesheet" href="styles.css?v=cachebust_003">
+    <link rel="stylesheet" href="styles.css?v=cachebust_004">
 </head>
 
 <body>
     <nav class="nav">
         <a href="#" class="logo">
             <div class="logo-dot"></div>
-            Veloo
+            BlitFrame
         </a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
     </nav>
 
     <main class="hero">
@@ -50,13 +56,13 @@
         </div>
 
         <div class="contact-info">
-            Or email us directly at <a href="mailto:info@veloo.io">info@veloo.io</a>
+            Or email us directly at <a href="mailto:info@blitframe.com">info@blitframe.com</a>
         </div>
     </main>
 
 
     <footer>
-        &copy; 2026 Veloo. All rights reserved.
+        &copy; 2026 BlitFrame. All rights reserved.
     </footer>
 
     <!-- Request Access Modal -->
@@ -174,7 +180,7 @@
                         style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; font-weight: 600;">
                         Your Deployment API Key</div>
                     <code id="apiKeyDisplay"
-                        style="font-family: monospace; color: var(--primary); font-size: 1.1rem; word-break: break-all; display: block; background: rgba(0,0,0,0.3); padding: 1.25rem; border-radius: 8px; border: 1px solid rgba(249, 115, 22, 0.2);">API_KEY_HERE</code>
+                        style="font-family: monospace; color: var(--primary); font-size: 1.1rem; word-break: break-all; display: block; background: rgba(0,0,0,0.3); padding: 1.25rem; border-radius: 8px; border: 1px solid var(--code-border-color);">API_KEY_HERE</code>
                     <button onclick="copyApiKey()" class="btn btn-secondary" style="width: 100%; margin-top: 1.5rem;">
                         Copy API Key
                     </button>
@@ -278,7 +284,7 @@
         const termsSuccessContent = document.getElementById('termsSuccessContent');
         const apiKeyDisplay = document.getElementById('apiKeyDisplay');
 
-        const API_BASE_URL = 'https://api.veloo.io';
+        const API_BASE_URL = 'https://api.blitframe.com';
 
         function copyApiKey() {
             const key = apiKeyDisplay.textContent;

@@ -1,14 +1,57 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
+/* ===== Dark Mode (Default) ===== */
 :root {
-    /* Colors extracted from localhost:8080 */
-    --bg-dark: #050507;
-    --primary: #f97316;
-    --primary-foreground: #431407;
-    --text-primary: #fafafa;
-    --text-muted: #71717a;
-    --border-color: rgba(249, 115, 22, 0.2);
-    --grid-color: rgba(249, 115, 22, 0.03);
+    --bg-dark: #16181f;
+    --primary: #26c6a0;
+    --primary-foreground: #16181f;
+    --text-primary: #f0f1f3;
+    --text-muted: #8f939e;
+    --border-color: #303440;
+    --grid-color: rgba(38, 198, 160, 0.03);
+    --card: #1d2029;
+    --card-elevated: #232633;
+    --glow: rgba(38, 198, 160, 0.20);
+    --glow-muted: rgba(38, 198, 160, 0.12);
+    --modal-bg: #1d2029;
+    --input-bg: rgba(255, 255, 255, 0.03);
+    --input-bg-focus: rgba(255, 255, 255, 0.05);
+    --placeholder-color: rgba(255, 255, 255, 0.2);
+    --btn-secondary-border: rgba(255, 255, 255, 0.1);
+    --btn-secondary-hover-bg: rgba(255, 255, 255, 0.05);
+    --btn-secondary-hover-border: rgba(255, 255, 255, 0.2);
+    --tooltip-bg: #232633;
+    --backdrop-bg: rgba(0, 0, 0, 0.7);
+    --modal-shadow: rgba(0, 0, 0, 0.5);
+    --ring-opacity: 0.3;
+    --code-border-color: rgba(38, 198, 160, 0.2);
+}
+
+/* ===== Light Mode ===== */
+.light {
+    --bg-dark: #f8f9fb;
+    --primary: #1d9e80;
+    --primary-foreground: #ffffff;
+    --text-primary: #16181f;
+    --text-muted: #686d7a;
+    --border-color: #d4d8e2;
+    --grid-color: rgba(29, 158, 128, 0.03);
+    --card: #eff1f5;
+    --card-elevated: #f5f6f9;
+    --glow: rgba(29, 158, 128, 0.06);
+    --glow-muted: rgba(29, 158, 128, 0.03);
+    --modal-bg: #ffffff;
+    --input-bg: rgba(0, 0, 0, 0.03);
+    --input-bg-focus: rgba(0, 0, 0, 0.05);
+    --placeholder-color: rgba(0, 0, 0, 0.3);
+    --btn-secondary-border: #d4d8e2;
+    --btn-secondary-hover-bg: rgba(0, 0, 0, 0.03);
+    --btn-secondary-hover-border: #b0b5c0;
+    --tooltip-bg: #ffffff;
+    --backdrop-bg: rgba(0, 0, 0, 0.4);
+    --modal-shadow: rgba(0, 0, 0, 0.15);
+    --ring-opacity: 0.2;
+    --code-border-color: rgba(29, 158, 128, 0.2);
 }
 
 * {
@@ -30,6 +73,7 @@ body {
         linear-gradient(var(--grid-color) 1px, transparent 1px),
         linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
     background-size: 40px 40px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Subtle Vignette & Concentric Rings */
@@ -41,11 +85,18 @@ body::after {
         repeating-radial-gradient(circle at center,
             transparent 0,
             transparent 120px,
-            rgba(249, 115, 22, 0.05) 120px,
-            rgba(249, 115, 22, 0.05) 121px),
+            rgba(38, 198, 160, 0.05) 120px,
+            rgba(38, 198, 160, 0.05) 121px),
         radial-gradient(circle at center, transparent 0%, var(--bg-dark) 100%);
     pointer-events: none;
     z-index: -1;
+    transition: background 0.3s ease;
+}
+
+.light body::after,
+body.light::after {
+    background:
+        radial-gradient(circle at center, transparent 0%, var(--bg-dark) 100%);
 }
 
 /* Navbar */
@@ -77,6 +128,38 @@ body::after {
     box-shadow: 0 0 10px var(--primary);
 }
 
+/* Theme Toggle */
+.theme-toggle {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    width: 38px;
+    height: 38px;
+}
+
+.theme-toggle:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+    background: var(--glow-muted);
+}
+
+.theme-toggle svg {
+    width: 18px;
+    height: 18px;
+}
+
+.theme-toggle .icon-sun { display: none; }
+.theme-toggle .icon-moon { display: block; }
+.light .theme-toggle .icon-sun { display: block; }
+.light .theme-toggle .icon-moon { display: none; }
+
 /* Hero Section */
 .hero {
     flex: 1;
@@ -96,7 +179,7 @@ body::after {
     align-items: center;
     gap: 0.5rem;
     padding: 0.375rem 0.75rem;
-    background: rgba(249, 115, 22, 0.1);
+    background: var(--glow-muted);
     border: 1px solid var(--border-color);
     border-radius: 9999px;
     font-size: 0.875rem;
@@ -128,12 +211,26 @@ h1 {
     animation: fadeup 1s ease-out 0.2s backwards;
 }
 
+.light h1 {
+    background: linear-gradient(to bottom right, #16181f, #686d7a);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 h1 span {
-    background: linear-gradient(to right, #f97316, #fb923c);
+    background: linear-gradient(to right, #26c6a0, #4dd8b8);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     position: relative;
+}
+
+.light h1 span {
+    background: linear-gradient(to right, #1d9e80, #26c6a0);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 p {
@@ -172,19 +269,19 @@ p {
 }
 
 .btn-primary:hover {
-    box-shadow: 0 0 25px rgba(249, 115, 22, 0.4);
+    box-shadow: 0 0 25px var(--glow);
     transform: translateY(-1px);
 }
 
 .btn-secondary {
     background-color: transparent;
     color: var(--text-primary);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--btn-secondary-border);
 }
 
 .btn-secondary:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.2);
+    background-color: var(--btn-secondary-hover-bg);
+    border-color: var(--btn-secondary-hover-border);
     transform: translateY(-1px);
 }
 
@@ -193,8 +290,6 @@ p {
     cursor: not-allowed !important;
     opacity: 0.6;
     position: relative;
-    /* Ensure no click events trigger navigation if href existed, 
-       but allows hover for tooltip */
 }
 
 /* Tooltip */
@@ -202,10 +297,9 @@ p {
     content: "Coming Soon";
     position: absolute;
     bottom: 120%;
-    /* Moved up slightly */
     left: 50%;
     transform: translateX(-50%) translateY(10px);
-    background: #1a1a1a;
+    background: var(--tooltip-bg);
     border: 1px solid var(--primary);
     color: var(--primary);
     padding: 0.5rem 0.8rem;
@@ -216,10 +310,9 @@ p {
     visibility: hidden;
     transition: all 0.2s ease;
     pointer-events: none;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 4px 20px var(--modal-shadow);
     font-weight: 600;
     z-index: 100;
-    /* Ensure on top */
 }
 
 /* Tooltip Arrow */
@@ -231,7 +324,7 @@ p {
     transform: translateX(-50%) translateY(16px) rotate(45deg);
     width: 8px;
     height: 8px;
-    background: #1a1a1a;
+    background: var(--tooltip-bg);
     border-right: 1px solid var(--primary);
     border-bottom: 1px solid var(--primary);
     opacity: 0;
@@ -257,7 +350,7 @@ p {
     transform: none !important;
     box-shadow: none !important;
     background-color: transparent !important;
-    border-color: rgba(255, 255, 255, 0.1) !important;
+    border-color: var(--btn-secondary-border) !important;
     color: var(--text-muted) !important;
 }
 
@@ -338,7 +431,7 @@ footer {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
+    background: var(--backdrop-bg);
     backdrop-filter: blur(5px);
     display: flex;
     justify-content: center;
@@ -355,7 +448,7 @@ footer {
 }
 
 .modal {
-    background: #0e0e11;
+    background: var(--modal-bg);
     border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 2.5rem;
@@ -364,7 +457,7 @@ footer {
     position: relative;
     transform: translateY(20px);
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 50px var(--modal-shadow);
 }
 
 .modal-backdrop.active .modal {
@@ -411,7 +504,7 @@ footer {
 .form-input {
     width: 100%;
     padding: 1rem;
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--input-bg);
     border: 1px solid var(--border-color);
     border-radius: 8px;
     color: var(--text-primary);
@@ -424,11 +517,11 @@ footer {
 .form-input:focus {
     outline: none;
     border-color: var(--primary);
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--input-bg-focus);
 }
 
 ::placeholder {
-    color: rgba(255, 255, 255, 0.2);
+    color: var(--placeholder-color);
 }
 
 .btn-block {
@@ -459,7 +552,7 @@ footer {
 }
 
 .legal-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--input-bg);
     border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 1.5rem;
@@ -474,10 +567,10 @@ footer {
 }
 
 .legal-card:hover {
-    background: rgba(249, 115, 22, 0.05);
+    background: var(--glow-muted);
     border-color: var(--primary);
     transform: translateY(-4px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 30px var(--modal-shadow);
 }
 
 .legal-card svg {

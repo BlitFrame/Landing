@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy - Velocity</title>
+    <!-- Theme (load early to prevent flash) -->
+    <script src="theme.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -12,18 +14,41 @@
         rel="stylesheet">
     <style>
         :root {
-            --primary: #f97316;
-            --primary-foreground: #431407;
-            --background: #050507;
-            --foreground: #fafafa;
-            --card: #0a0a0d;
-            --card-elevated: #0f0f13;
-            --border: #1a1a1f;
-            --muted: #0d0d10;
-            --muted-foreground: #71717a;
-            --text-primary: #fafafa;
-            --text-muted: #a1a1aa;
-            --glow: rgba(249, 115, 22, 0.15);
+            --primary: #26c6a0;
+            --primary-foreground: #16181f;
+            --background: #16181f;
+            --foreground: #f0f1f3;
+            --card: #1d2029;
+            --card-elevated: #232633;
+            --border: #303440;
+            --muted: #2c2f38;
+            --muted-foreground: #8f939e;
+            --text-primary: #f0f1f3;
+            --text-muted: #8f939e;
+            --glow: rgba(38, 198, 160, 0.15);
+            --grid-color: rgba(38, 198, 160, 0.03);
+            --glow-accent: rgba(38, 198, 160, 0.3);
+            --glow-subtle: rgba(38, 198, 160, 0.05);
+            --page-shadow: rgba(0, 0, 0, 0.5);
+        }
+
+        .light {
+            --primary: #1d9e80;
+            --primary-foreground: #ffffff;
+            --background: #f8f9fb;
+            --foreground: #16181f;
+            --card: #ffffff;
+            --card-elevated: #f5f6f9;
+            --border: #d4d8e2;
+            --muted: #e8eaf0;
+            --muted-foreground: #686d7a;
+            --text-primary: #16181f;
+            --text-muted: #686d7a;
+            --glow: rgba(29, 158, 128, 0.06);
+            --grid-color: rgba(29, 158, 128, 0.03);
+            --glow-accent: rgba(29, 158, 128, 0.2);
+            --glow-subtle: rgba(29, 158, 128, 0.03);
+            --page-shadow: rgba(0, 0, 0, 0.08);
         }
 
         * {
@@ -40,6 +65,7 @@
             padding: 40px 20px;
             position: relative;
             min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         /* Background Patterns */
@@ -49,8 +75,8 @@
             inset: 0;
             z-index: -1;
             background-image:
-                linear-gradient(rgba(249, 115, 22, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(249, 115, 22, 0.03) 1px, transparent 1px);
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
             background-size: 40px 40px;
             mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
         }
@@ -65,8 +91,8 @@
             height: 100%;
             z-index: -1;
             background: radial-gradient(ellipse at 50% 0%,
-                    rgba(249, 115, 22, 0.08) 0%,
-                    rgba(249, 115, 22, 0.03) 30%,
+                    var(--glow) 0%,
+                    var(--glow-subtle) 30%,
                     transparent 70%);
             pointer-events: none;
         }
@@ -78,11 +104,17 @@
             z-index: 10;
         }
 
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+        }
+
         .back-link {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            margin-bottom: 2.5rem;
             color: var(--text-muted);
             text-decoration: none;
             font-size: 0.9rem;
@@ -94,16 +126,49 @@
             color: var(--primary);
         }
 
+        /* Theme Toggle */
+        .page-theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            width: 38px;
+            height: 38px;
+        }
+
+        .page-theme-toggle:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+            background: var(--glow);
+        }
+
+        .page-theme-toggle svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .page-theme-toggle .icon-sun { display: none; }
+        .page-theme-toggle .icon-moon { display: block; }
+        .light .page-theme-toggle .icon-sun { display: block; }
+        .light .page-theme-toggle .icon-moon { display: none; }
+
         .page {
             background: var(--card);
             padding: 80px 100px;
             border: 1px solid var(--border);
             border-radius: 20px;
             box-shadow:
-                0 0 0 1px rgba(249, 115, 22, 0.05),
-                0 20px 50px rgba(0, 0, 0, 0.5);
+                0 0 0 1px var(--glow-subtle),
+                0 20px 50px var(--page-shadow);
             position: relative;
             overflow: hidden;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .page::before {
@@ -113,10 +178,10 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.3), transparent);
+            background: linear-gradient(90deg, transparent, var(--glow-accent), transparent);
         }
 
-        /* Typography based on Google Doc & Website Theme */
+        /* Typography */
         h1 {
             font-family: 'Space Grotesk', sans-serif;
             font-size: 2.25rem;
@@ -125,6 +190,13 @@
             text-transform: uppercase;
             letter-spacing: -0.02em;
             background: linear-gradient(to bottom right, #fff, #a1a1aa);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .light h1 {
+            background: linear-gradient(to bottom right, #16181f, #686d7a);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -173,7 +245,7 @@
         }
 
         li::before {
-            content: "→";
+            content: "\2192";
             position: absolute;
             left: 0;
             color: var(--primary);
@@ -201,20 +273,26 @@
 
 <body>
     <div class="page-container">
-        <a href="/" class="back-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" style="width: 18px; height: 18px;">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-            Back to Homepage
-        </a>
+        <div class="page-header">
+            <a href="/" class="back-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" style="width: 18px; height: 18px;">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Back to Homepage
+            </a>
+            <button class="page-theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            </button>
+        </div>
 
         <article class="page">
             <h1>Velocity Platform Privacy Policy</h1>
             <div class="doc-header">VELOCITY PLATFORM PRIVACY POLICY<br>LAST UPDATED: JANUARY 14, 2026</div>
 
-            <p>Veloo Ltd. ("Company," "we," or "us") is committed to protecting the privacy of our business customers.
+            <p>BlitFrame Ltd. ("Company," "we," or "us") is committed to protecting the privacy of our business customers.
                 This
                 Privacy Policy explains how we collect, use, and share information when you participate in the Velocity
                 Platform pilot program. This Privacy Policy should be read in conjunction with our Terms of Service.</p>
@@ -284,7 +362,7 @@
                     the
                     Data Processor. If you require a Data Processing Addendum (DPA) to comply with GDPR, UK GDPR, LGPD,
                     or
-                    other privacy regulations, please contact us at info@veloo.io prior to uploading any personal data.
+                    other privacy regulations, please contact us at info@blitframe.com prior to uploading any personal data.
                 </li>
             </ul>
 
@@ -340,7 +418,7 @@
                     (e.g.,
                     the ICO in the UK, OAIC in Australia, or Privacy Commissioner in Canada).</li>
             </ul>
-            <p>To exercise these rights, contact us at info@veloo.io. We will respond within 30 days. If we deny your
+            <p>To exercise these rights, contact us at info@blitframe.com. We will respond within 30 days. If we deny your
                 request, residents of certain US states (e.g., Virginia, Colorado) have the right to appeal our decision
                 by
                 contacting us.</p>
@@ -371,7 +449,7 @@
                 the revised Policy.</p>
 
             <h2>9. CONTACT US</h2>
-            <p>For any questions regarding this Privacy Policy, please contact us at info@veloo.io.</p>
+            <p>For any questions regarding this Privacy Policy, please contact us at info@blitframe.com.</p>
 
             <h2>10. US STATE PRIVACY RIGHTS</h2>
             <p>If you are a resident of California, Virginia, Colorado, Connecticut, Utah, or other US states with
